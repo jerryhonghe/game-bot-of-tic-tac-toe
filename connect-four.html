@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4 in a Row - X-O Version</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .game-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            gap: 5px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 420px;
+            height: 420px;
+        }
+        .cell {
+            width: 60px;
+            height: 60px;
+            background-color: #f0f0f0;
+            border: 2px solid #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .cell.X {
+            color: #4285f4;
+        }
+        .cell.O {
+            color: #ea4335;
+        }
+        .cell.empty:hover {
+            background-color: #e0e0e0;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .stat-box {
+            padding: 10px 20px;
+            background: #eee;
+            border-radius: 4px;
+        }
+        select, button {
+            padding: 8px 16px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        .log-container {
+            width: 300px;
+            height: 400px;
+            overflow-y: auto;
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-left: 20px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        .analysis {
+            margin-top: 20px;
+            text-align: left;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .nav-links {
+            margin: 20px 0;
+        }
+        .nav-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #0066cc;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>4 in a Row Battle Platform</h1>
+    
+    <div class="nav-links">
+        <a href="/">Tic Tac Toe</a> | 
+        <a href="connect-four.html">4 in a Row</a>
+    </div>
+    
+    <div class="controls">
+        <div>
+            <label for="player-x">Player X:</label>
+            <select id="player-x">
+                <option value="human">Human</option>
+                <option value="alphazero">AlphaZero AI</option>
+                <option value="mcts">MCTS Pure AI</option>
+            </select>
+            
+            <label for="player-o">Player O:</label>
+            <select id="player-o">
+                <option value="human">Human</option>
+                <option value="alphazero" selected>AlphaZero AI</option>
+                <option value="mcts">MCTS Pure AI</option>
+            </select>
+        </div>
+        
+        <div style="margin-top: 15px;">
+            <button id="start-game">Start Game</button>
+            <button id="reset-game">Reset</button>
+            <button id="auto-play" disabled>Auto Play (10 rounds)</button>
+        </div>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-box">
+            <div>Current Turn: <span id="current-player">X</span></div>
+        </div>
+        <div class="stat-box">
+            <div>Game Status: <span id="game-status">Not Started</span></div>
+        </div>
+        <div class="stat-box">
+            <div>X Wins: <span id="x-wins">0</span></div>
+        </div>
+        <div class="stat-box">
+            <div>O Wins: <span id="o-wins">0</span></div>
+        </div>
+        <div class="stat-box">
+            <div>Draws: <span id="draws">0</span></div>
+        </div>
+    </div>
+    
+    <div class="game-container">
+        <div>
+            <div id="game-board" class="board">
+                <!-- Board will be generated by JavaScript -->
+            </div>
+            
+            <div class="analysis">
+                <h3>AI Analysis</h3>
+                <div id="ai-analysis">
+                    Game not started
+                </div>
+            </div>
+        </div>
+        
+        <div class="log-container" id="game-log">
+            <div class="log-entry">Game log will be displayed here</div>
+        </div>
+    </div>
+
+    <script src="/connectfour.js"></script>
+</body>
+</html>
